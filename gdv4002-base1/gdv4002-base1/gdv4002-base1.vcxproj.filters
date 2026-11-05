@@ -25,6 +25,9 @@
     <Filter Include="imgui\Debug Filters">
       <UniqueIdentifier>{a6eab866-0c8b-49cf-8b49-0118bf99a18d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="My Classes">
+      <UniqueIdentifier>{2975f667-23b9-454f-b507-69e18c4ac033}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="..\Libs\imgui\imgui_impl_opengl3.cpp">
       <Filter>imgui\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="..\Libs\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="keys.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>My Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
