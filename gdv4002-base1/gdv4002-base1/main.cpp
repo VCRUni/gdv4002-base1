@@ -1,5 +1,7 @@
 #include "Engine.h"
 #include "keys.h"
+#include "player.h"
+#include "Enemy.h"
 #include <bitset>
 #include <math.h>
 
@@ -30,17 +32,26 @@ int main(void) {
 	// Setup game scene objects here
 	//
 
-	addObject("player", glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), "Resources\\Textures\\player1_ship.png", TextureProperties::NearestFilterTexture());
+	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f, 70.0f);
+    addObject("player", mainPlayer);
 
-	addObject("enemy", glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png", TextureProperties::NearestFilterTexture());
-	addObject("enemy", glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png", TextureProperties::NearestFilterTexture());
-	addObject("enemy", glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.75f, 0.75f), "Resources\\Textures\\alien01.png", TextureProperties::NearestFilterTexture());
+	// 1. Load enemy texture  
+	GLuint enemyTexture = loadTexture("Resources\\Textures\\alien01.png");
+
+	// 2. Create enemy objects 
+	Enemy* enemy1 = new Enemy(glm::vec2(0.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(45.0f));
+	Enemy* enemy2 = new Enemy(glm::vec2(1.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(90.0f));
+	Enemy* enemy3 = new Enemy(glm::vec2(2.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), enemyTexture, 0.0f, glm::radians(60.0f));
+
+	// Add enemy objects to the engine 
+	addObject("enemy1", enemy1);
+	addObject("enemy2", enemy2);
+	addObject("enemy3", enemy3);
 
 	//
 	// Set callback functions
 	// 
-
-	setUpdateFunction(myUpdateScene);
 	setKeyboardHandler(mykeyboardhandler);
 	listGameObjectKeys();
 	listObjectCounts();
@@ -53,48 +64,6 @@ int main(void) {
 
 	// return success :)
 	return 0;
-}
-
-float enemyPhase[3] = { 2.0f, 4.0f, 0.0f };
-
-float enemyPhaseVelocity[3] = { 
- glm::radians(85.0f),
- glm::radians(90.0f),
- glm::radians(95.0f) };
-
-void myUpdateScene(GLFWwindow* window, double tDelta) {
-
-	// add update code here 
-	GameObjectCollection enemies = getObjectCollection("enemy");
-	for (int i = 0; i < enemies.objectCount; i++)
-	{
-		enemies.objectArray[i]->position.y = sinf(enemyPhase[i]); // assume phase stored in radians so no conversion needed 
-		enemyPhase[i] += enemyPhaseVelocity[i] * tDelta;
-	}
-	
-	static float playerspeed = 1.0f;
-	static float playertorgue = glm::radians(70.0f);
-
-	GameObject2D* player = getObject("player");
-
-	if (keys.test(key::W) == true)
-	{
-		player->position.x += (cos(player->orientation) * playerspeed) * (float)tDelta;
-		player->position.y += (sin(player->orientation) * playerspeed) * (float)tDelta;
-	}
-	if (keys.test(key::S) == true)
-	{
-		player->position.x -= (cos(player->orientation) * playerspeed) * (float)tDelta;
-		player->position.y -= (sin(player->orientation) * playerspeed) * (float)tDelta;
-	}
-	if (keys.test(key::A) == true)
-	{
-		player->orientation += playertorgue * (float)tDelta;
-	}
-	if (keys.test(key::D) == true)
-	{
-		player->orientation -= playertorgue * (float)tDelta;
-	}
 }
 
 void mykeyboardhandler(GLFWwindow* window, int key, int scancode, int action, int mods)

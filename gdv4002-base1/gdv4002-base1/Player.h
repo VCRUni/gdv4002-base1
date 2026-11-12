@@ -4,13 +4,13 @@
 class Player : public GameObject2D
 {
 private:
-	float playerspeed;
+	float playerSpeed;
+	float PlayerTorque;
 
 public:
-	Player(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float initialPlayerSpeed);
+	Player(glm::vec2 initPosition, float initOrientation, glm::vec2 initSize, GLuint initTextureID, float initialPlayerSpeed, float initialPlayerTorque);
 
 	void update(double tDelta) override;
-
 
 };
 
