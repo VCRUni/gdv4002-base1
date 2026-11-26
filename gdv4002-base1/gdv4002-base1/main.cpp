@@ -14,12 +14,13 @@ void mykeyboardhandler(GLFWwindow*, int, int, int, int);
 // Global Variables
 
 std::bitset<5>keys{ 0x0 };
+glm::vec2 gravity = glm::vec2(0.0f, -0.5f);
 
 
 int main(void) {
 
 	// Initialise the engine (create window, setup OpenGL backend)
-	int initResult = engineInit("GDV4002 - Applied Maths for Games", 1024, 1024);
+	int initResult = engineInit("GDV4002 - Applied Maths for Games", 1024, 1024, 5.0f);
 
 	// If the engine initialisation failed report error and exit
 	if (initResult != 0) {
@@ -33,7 +34,7 @@ int main(void) {
 	//
 
 	GLuint playerTexture = loadTexture("Resources\\Textures\\player1_ship.png");
-	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f, 70.0f);
+	Player* mainPlayer = new Player(glm::vec2(-1.5f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f), playerTexture, 1.0f);
     addObject("player", mainPlayer);
 
 	// 1. Load enemy texture  
